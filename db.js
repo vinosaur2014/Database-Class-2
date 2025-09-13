@@ -26,3 +26,26 @@ con.query(sql, values, function(err, result){
     if (err) throw err;
     console.log("Record inserted, ID:", result.insertId);
 });
+var sql = "INSERT INTO users (name, email) VALUES ?";
+var values = [
+    ["Bob", "bob@example.com"],
+    ["Charlie", "charlie@example.com"],
+    ["David", "david@example.com"]
+];
+con.query(sql, [values], function (err, result){
+    if (err) throw err;
+    console.log("Number of records inserted:", result.affectedRows);
+});
+
+con.query("SELECT * FROM users", function (err, result){
+    if (err) throw err;
+    console.log("Users",result);
+    con.end();
+});
+var conditionSQL = "SELECT * FROM users WHERE name = 'Alice'";
+con.query(conditionSQL, function (err,result)
+{
+    if (err) throw err;
+    console.log("Filtered Result (name = Alice):", result);
+    con.end()
+});
